@@ -1,0 +1,10 @@
+
+  <nz-list nzBordered nzHeader="Active Users" nzFooter="Active">
+    @for(user of users; track user; let id = $index;){
+      <nz-list-item>
+        <span nz-typography><mark>{{user}} | <a href="#" (click)="onSetToInactive(id)">Set to inactive</a></mark></span>
+       
+      </nz-list-item>
+    }
+    
+  </nz-list>

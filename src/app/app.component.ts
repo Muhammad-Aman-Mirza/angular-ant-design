@@ -4,6 +4,8 @@ import { RouterOutlet } from "@angular/router";
 import { CockpitComponent } from "./cockpit/cockpit.component";
 import { ServerElementComponent } from "./server-element/server-element.component";
 import { GameControlComponent } from "./game-control/game-control.component";
+import { ActiveUsersComponent } from "./active-users/active-users.component";
+import { InactiveUsersComponent } from "./inactive-users/inactive-users.component";
 import { EvenComponent } from "./even/even.component";
 import { OddComponent } from "./odd/odd.component";
 import { NzCardModule } from "ng-zorro-antd/card";
@@ -26,7 +28,9 @@ import { NzListModule } from "ng-zorro-antd/list";
     NzButtonModule,
     NzLayoutModule,
     NzDropDownModule,
-    NzListModule
+    NzListModule,
+    ActiveUsersComponent,
+    InactiveUsersComponent
   ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
@@ -37,12 +41,13 @@ export class AppComponent {
   activeUsers = ["Max", "Anna"];
   inactiveUsers = ["Chris", "Manu"];
 
-  activeUser(id: number) {
-    this.activeUsers.push(this.inactiveUsers[id]);
-    this.inactiveUsers.splice(id, 1);
-  }
-  inactiveUser(id: number) {
+  onSetToInactive(id: number) {
     this.inactiveUsers.push(this.activeUsers[id]);
     this.activeUsers.splice(id, 1);
+  }
+
+  onSetToActive(id: number) {
+    this.activeUsers.push(this.inactiveUsers[id]);
+    this.inactiveUsers.splice(id, 1);
   }
 }
