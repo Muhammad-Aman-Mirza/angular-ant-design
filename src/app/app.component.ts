@@ -12,7 +12,8 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   standalone: true,
   imports: [RouterOutlet,CockpitComponent,ServerElementComponent,CommonModule,NzCardModule,NzButtonModule,NzLayoutModule,NzDropDownModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  preserveWhitespaces:true
 })
 export class AppComponent {
   extraTemplate: string|TemplateRef<void>|undefined;
