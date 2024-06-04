@@ -1,12 +1,11 @@
 <div nz-row>
   <nz-card style="width:300px;" nzTitle="Game" [nzExtra]="extraTemplate">
-    <button nz-button nzType="primary" (click)="startGame()">Start Game</button>
-    <button nz-button nzType="primary" (click)="pauseGame()">Pause Game</button>
+    <app-game-control (intervalFired)="intervelFired($event)"></app-game-control>
   </nz-card>
 </div>
 <div nz-row>
   <nz-card style="width:300px;" nzTitle="Even OR Odd" [nzExtra]="extraTemplate">
-    <p *ngFor="let number of oddNumbers.concat(evenNumbers)" [style.color]="number % 2 === 0 ? 'orange' : 'red'">{{ number }}</p>
-
+    <app-even *ngFor="let even of evenNumbers" [number]="even"></app-even>
+    <app-odd *ngFor="let odd of oddNumbers" [number]="odd"></app-odd>
   </nz-card>
 </div>
