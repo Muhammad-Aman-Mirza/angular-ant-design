@@ -1,0 +1,30 @@
+<nz-row>
+  <nz-col nzSpan="24">
+    <p>Add new Servers or blueprints!</p>
+    <nz-form-item>
+      <nz-form-label>Server Name</nz-form-label>
+      <!--<input type="text" class="form-control" [(ngModel)]="newServerName">-->
+      <input
+        nz-input
+        type="text"
+       
+        class="form-control"
+        #serverNameInput>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>Server Content</nz-form-label>
+      <!--<input type="text" class="form-control" [(ngModel)]="newServerContent">-->
+      <input
+        nz-input
+        type="text"
+       
+        class="form-control"
+        #serverContentInput>
+    </nz-form-item>
+    <br>
+    <nz-form-item>
+      <button nz-button nzType="primary" (click)="onAddServer(serverNameInput)">Add Server</button>
+      <button nz-button nzType="primary" (click)="onAddBlueprint(serverNameInput)">Add Server Blueprint</button>
+    </nz-form-item>
+  </nz-col>
+</nz-row>
