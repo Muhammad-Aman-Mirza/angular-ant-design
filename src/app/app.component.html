@@ -1,27 +1,14 @@
-<nz-layout>
-  <nz-sider nzWidth="200px" nzTheme="light"></nz-sider>
-  <nz-layout>
-    <nz-content>
-      <app-cockpit
-        (serverCreated)="onServerAdded($event)"
-        (bpCreated)="onBlueprintAdded($event)"
-      ></app-cockpit>
-      <hr>
-      <div class="row">
-        <div class="col-xs-12">
-          <nz-card *ngFor="let serverElement of serverElements">
-            <ng-template #titleTemplate>
-              <div class="server-title" *ngIf="serverElement.type === 'server'"  style="color: red">Server: {{ serverElement.name }}</div>
-              <div class="blueprint-title" *ngIf="serverElement.type === 'blueprint'" style="color: BLUE">Blueprint: {{ serverElement.name }}</div>
-            </ng-template>
-            <nz-card-meta [nzTitle]="titleTemplate"></nz-card-meta>
-            <p>
-              <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
-              <em *ngIf="serverElement.type === 'blueprint'" style="color: BLUE">{{ serverElement.content }}</em>
-            </p>
-          </nz-card>
-        </div>
-      </div>
-    </nz-content>
-  </nz-layout>
-</nz-layout>
+<div nz-row>
+  <nz-card style="width:300px;" nzTitle="Card title" [nzExtra]="extraTemplate">
+    <h3>Start Game</h3>
+    <button nz-button nzType="primary" (click)="startGame()">Start Game</button>
+    <button nz-button nzType="primary" (click)="pauseGame()">Pause Game</button>
+  </nz-card>
+</div>
+<div nz-row>
+  <nz-card style="width:300px;" nzTitle="Card title" [nzExtra]="extraTemplate">
+    <h3>Even OR Odd</h3>
+    <p *ngFor="let number of oddNumbers.concat(evenNumbers)" [style.color]="number % 2 === 0 ? 'orange' : 'red'">{{ number }}</p>
+
+  </nz-card>
+</div>
