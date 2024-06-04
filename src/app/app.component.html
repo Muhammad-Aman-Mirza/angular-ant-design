@@ -1,11 +1,22 @@
 <div nz-row>
-  <nz-card style="width:300px;" nzTitle="Game" [nzExtra]="extraTemplate">
-    <app-game-control (intervalFired)="intervelFired($event)"></app-game-control>
-  </nz-card>
+  <nz-list nzBordered nzHeader="Active Users" nzFooter="Active">
+    @for(user of activeUsers; track user; let id = $index;){
+      <nz-list-item>
+        <span nz-typography><mark>{{user}} | <a href="#" (click)="activeUser(id)">Set to active</a></mark></span>
+       
+      </nz-list-item>
+    }
+    
+  </nz-list>
 </div>
 <div nz-row>
-  <nz-card style="width:300px;" nzTitle="Even OR Odd" [nzExtra]="extraTemplate">
-    <app-even *ngFor="let even of evenNumbers" [number]="even"></app-even>
-    <app-odd *ngFor="let odd of oddNumbers" [number]="odd"></app-odd>
-  </nz-card>
+  <nz-list nzBordered nzHeader="InActive Users" nzFooter="InActive">
+    @for(user of inactiveUsers; track user; let id = $index;){
+      <nz-list-item>
+        <span nz-typography><mark>{{user}} | <a href="#" (click)="inactiveUser(id)">Set to Inactive</a></mark></span>
+       
+      </nz-list-item>
+    }
+    
+  </nz-list>
 </div>
