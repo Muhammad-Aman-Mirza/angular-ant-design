@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { NzListModule } from "ng-zorro-antd/list";
+import { UsersService } from "../users.service";
 
 @Component({
   selector: "app-active-users",
@@ -8,11 +9,14 @@ import { NzListModule } from "ng-zorro-antd/list";
   templateUrl: "./active-users.component.html",
   styleUrl: "./active-users.component.css"
 })
-export class ActiveUsersComponent {
-  @Input() users!: string[];
-  @Output() userSetToInactive = new EventEmitter<number>();
-
+export class ActiveUsersComponent implements OnInit {
+  users!: string[]
+  constructor(private userService:UsersService){}
   onSetToInactive(id: number) {
-    this.userSetToInactive.emit(id);
+    this.userService.setToInactive(id)
   }
+  ngOnInit(): void {
+    this.users = this.userService.activeUsers
+  }
+  
 }
