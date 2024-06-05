@@ -13,6 +13,9 @@ import { NzDropDownModule } from "ng-zorro-antd/dropdown";
 import { NzLayoutModule } from "ng-zorro-antd/layout";
 import { NzButtonModule } from "ng-zorro-antd/button";
 import { NzListModule } from "ng-zorro-antd/list";
+import { NzGridModule } from "ng-zorro-antd/grid";
+import { NzSelectModule } from "ng-zorro-antd/select";
+import { NzPlacementType } from "ng-zorro-antd/dropdown";
 import { createStore, select, withProps } from "@ngneat/elf";
 import {
   selectAllEntities,
@@ -29,45 +32,6 @@ import { joinRequestResult, trackRequestResult } from "@ngneat/elf-requests";
 import { fromFetch } from "rxjs/fetch";
 import { tap } from "rxjs";
 
-interface Todo {
-  id: number;
-  label: string;
-}
-
-const store = createStore({ name: "todos" }, withEntities<Todo>());
-const entities = store.pipe(selectAllEntities(), joinRequestResult(["todos"]));
-entities.subscribe(
-  ({
-    isLoading,
-    isError,
-    isSuccess,
-    data,
-    status,
-    successfulRequestsCount
-  }) => {
-    console.log(
-      isLoading,
-      isError,
-      isSuccess,
-      status,
-      successfulRequestsCount + 1,
-      data // typed as Todo[]
-    );
-  }
-);
-
-function setTodos(todos: Todo[]) {
-  store.update(setEntities(todos));
-}
-
-function fetchTodos() {
-  return fromFetch<Todo[]>("https://jsonplaceholder.typicode.com/todos", {
-    selector: response => response.json()
-  }).pipe(tap(setTodos, trackRequestResult(["todos"])));
-}
-let data = fetchTodos().subscribe();
-console.log("data=", data);
-
 @Component({
   selector: "app-root",
   standalone: true,
@@ -83,6 +47,8 @@ console.log("data=", data);
     NzButtonModule,
     NzLayoutModule,
     NzDropDownModule,
+    NzSelectModule,
+    NzGridModule,
     NzListModule,
     ActiveUsersComponent,
     InactiveUsersComponent
@@ -93,4 +59,30 @@ console.log("data=", data);
 })
 export class AppComponent {
   extraTemplate: string | TemplateRef<void> | undefined;
+  listOfPosition: NzPlacementType[] = ["bottomCenter"];
+  accounts = [
+    {
+      name: "Master Account",
+      status: "active"
+    },
+    {
+      name: "Testaccount",
+      status: "inactive"
+    },
+    {
+      name: "Hidden Account",
+      status: "unknown"
+    }
+  ];
+
+  onCreateAccount(accountName: string, accountStatus: string) {
+    this.accounts.push({
+      name: accountName,
+      status: accountStatus
+    });
+  }
+
+  onSetTo(account: any, changeStatus: string) {
+    account.status = changeStatus;
+  }
 }
