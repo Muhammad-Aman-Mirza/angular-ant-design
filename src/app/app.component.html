@@ -1,39 +1,18 @@
-<div class="row">
-  <div class="col-xs-12 col-md-8 col-md-offset-2">
-    <div class="form-group">
-      <label>Account Name</label><br>
-      <input
-        type="text"
-        class="form-control"
-        #accountName>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <app-new-account (accountAdded)="onAddAccount($event)"></app-new-account>
+<app-account *ngFor="let acc of accounts; let i = index"
+[account]="acc"
+[id]="i"
+(statusChanged)="onStatusChanged($event)"
+></app-account>
     </div>
-    <div class="form-group">
-      <label>Account status</label><br>
-      <select class="form-control" #status>
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-        <option value="hidden">Hidden</option>
-      </select>
-    </div><br>
-    <button
-      class="btn btn-primary"
-      (click)="onCreateAccount(accountName.value,status.value)"
-      >
-      Add Account
-    </button>
   </div>
 </div>
 
 
 
-<div nz-row>
-  <nz-col nz-col nzSpan="5" *ngFor="let account of accounts; let i = index">
-    <h5>{{account.name}}</h5>
-    <hr>
-    <p>This account is {{ account.status }}</p>
-    <strong><button nz-button nzType="primary" (click)="onSetTo(account,'active')">Set to 'active'</button>
-      <button nz-button nzType="primary" (click)="onSetTo(account,'inactive')">Set to 'inactive'</button>
-      <button nz-button nzType="primary" (click)="onSetTo(account,'unknown')">Set to 'unknown'</button></strong>
-  </nz-col>
-  
-</div>
+

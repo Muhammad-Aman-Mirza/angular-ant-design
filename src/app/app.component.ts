@@ -6,6 +6,8 @@ import { ServerElementComponent } from "./server-element/server-element.componen
 import { GameControlComponent } from "./game-control/game-control.component";
 import { ActiveUsersComponent } from "./active-users/active-users.component";
 import { InactiveUsersComponent } from "./inactive-users/inactive-users.component";
+import { NewAccountComponent } from "./new-account/new-account.component";
+import { AccountComponent } from "./account/account.component";
 import { EvenComponent } from "./even/even.component";
 import { OddComponent } from "./odd/odd.component";
 import { NzCardModule } from "ng-zorro-antd/card";
@@ -38,11 +40,13 @@ import { tap } from "rxjs";
   imports: [
     OddComponent,
     EvenComponent,
+    NewAccountComponent,
     GameControlComponent,
     RouterOutlet,
     CockpitComponent,
     ServerElementComponent,
     CommonModule,
+    AccountComponent,
     NzCardModule,
     NzButtonModule,
     NzLayoutModule,
@@ -75,14 +79,14 @@ export class AppComponent {
     }
   ];
 
-  onCreateAccount(accountName: string, accountStatus: string) {
+  onAddAccount(newAccount: { name: string; status: string }) {
     this.accounts.push({
-      name: accountName,
-      status: accountStatus
+      name: newAccount.name,
+      status: newAccount.status
     });
   }
 
-  onSetTo(account: any, changeStatus: string) {
-    account.status = changeStatus;
+  onStatusChanged(updateStatus: { id: number; newStatus: string }) {
+    this.accounts[updateStatus.id].status = updateStatus.newStatus;
   }
 }

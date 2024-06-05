@@ -1,1 +1,11 @@
-<p>account works!</p>
+<div nz-row>
+	<nz-col nz-col nzSpan="5">
+		<h5>{{account.name}}</h5>
+		<hr>
+		<p>This account is {{ account.status }}</p>
+		<strong><button nz-button nzType="primary" (click)="onSetTo('active')">Set to 'active'</button>
+			<button nz-button nzType="primary" (click)="onSetTo('inactive')">Set to 'inactive'</button>
+			<button nz-button nzType="primary" (click)="onSetTo('unknown')">Set to 'unknown'</button></strong>
+	</nz-col>
+
+</div>
