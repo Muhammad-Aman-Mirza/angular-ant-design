@@ -33,6 +33,7 @@ import { localStorageStrategy, persistState } from "@ngneat/elf-persist-state";
 import { joinRequestResult, trackRequestResult } from "@ngneat/elf-requests";
 import { fromFetch } from "rxjs/fetch";
 import { tap } from "rxjs";
+import { AccountServiceService } from "./account-service.service";
 
 @Component({
   selector: "app-root",
@@ -62,31 +63,41 @@ import { tap } from "rxjs";
   preserveWhitespaces: true
 })
 export class AppComponent {
+  title(title: any) {
+    throw new Error("Method not implemented.");
+  }
   extraTemplate: string | TemplateRef<void> | undefined;
   listOfPosition: NzPlacementType[] = ["bottomCenter"];
-  accounts = [
-    {
-      name: "Master Account",
-      status: "active"
-    },
-    {
-      name: "Testaccount",
-      status: "inactive"
-    },
-    {
-      name: "Hidden Account",
-      status: "unknown"
-    }
-  ];
+  // accounts = [
+  //   {
+  //     name: "Master Account",
+  //     status: "active"
+  //   },
+  //   {
+  //     name: "Testaccount",
+  //     status: "inactive"
+  //   },
+  //   {
+  //     name: "Hidden Account",
+  //     status: "unknown"
+  //   }
+  // ];
 
-  onAddAccount(newAccount: { name: string; status: string }) {
-    this.accounts.push({
-      name: newAccount.name,
-      status: newAccount.status
-    });
-  }
+  // onAddAccount(newAccount: { name: string; status: string }) {
+  //   this.accounts.push({
+  //     name: newAccount.name,
+  //     status: newAccount.status
+  //   });
+  // }
 
-  onStatusChanged(updateStatus: { id: number; newStatus: string }) {
-    this.accounts[updateStatus.id].status = updateStatus.newStatus;
+  // onStatusChanged(updateStatus: { id: number; newStatus: string }) {
+  //   this.accounts[updateStatus.id].status = updateStatus.newStatus;
+  // }
+  accounts: { name: string; status: string }[] = [];
+
+  constructor(private accountsService: AccountServiceService) {}
+
+  ngOnInit() {
+    this.accounts = this.accountsService.accounts;
   }
 }

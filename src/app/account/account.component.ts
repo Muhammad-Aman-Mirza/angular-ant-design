@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { AccountServiceService } from '../account-service.service';
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -10,11 +11,10 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 export class AccountComponent {
   @Input() account!: { name: string, status: string }
   @Input() id!: number
-  @Output() statusChanged = new EventEmitter<{id:number,newStatus:string}>()
+
+  constructor(private accountService:AccountServiceService){}
   
   onSetTo(status: string) {
-    this.statusChanged.emit({
-      id:this.id,newStatus:status
-    })
+    this.accountService.onSetToService(this.id,status)
   }
 }
