@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { NzListModule } from "ng-zorro-antd/list";
 import { UsersService } from "../users.service";
+
 @Component({
   selector: "app-inactive-users",
   standalone: true,

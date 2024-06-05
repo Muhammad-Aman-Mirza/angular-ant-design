@@ -9,6 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './even.component.css'
 })
 export class EvenComponent {
-  @Input() number!:number
-
+  @Input() number!: number
 }
