@@ -1,8 +1,77 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12 col-md-8 col-md-offset-2">
-      <app-new-account></app-new-account>
-      <app-account *ngFor="let acc of accounts; let i = index" [account]="acc" [id]="i"></app-account>
-    </div>
+<div class="section-container-1">
+  <div class="heading-status" style="display: flex; justify-content: space-between;">
+    <h3 class="simple-heading-2">
+      Basic Information
+    </h3>
+    <form [formGroup]="basicInfoForm" nz-form style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <nz-form-item>
+        <nz-form-label>Status</nz-form-label>
+        <nz-form-control>
+          <nz-switch></nz-switch>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <form [formGroup]="basicInfoForm" nz-form nzLayout="vertical" style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <nz-form-item class="fx-gr-1" nzSelectModal modalType="Entity">
+      <nz-form-label nzLabelAlign="left" nzRequired><span nz-typography><u>Employee</u></span></nz-form-label>
+      <nz-form-control>
+        <!-- <input nz-input [value]="basicInfoForm.get('employeeName')?.value" placeholder="Select Employee" readonly> -->
+        <input nz-input formControlName="employeeId">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="fx-gr-1">
+      <nz-form-label nzLabelAlign="left" nzRequired>Full Name</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="Enter Full Name" formControlName="fullName">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="fx-gr-1">
+      <nz-form-label nzLabelAlign="left">Password</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="Enter Password" type="password" formControlName="password">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="fx-gr-1">
+      <nz-form-label nzLabelAlign="left">Confirm Password</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="Confirm Password" type="password" formControlName="confirm">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="fx-gr-1">
+      <nz-form-label nzLabelAlign="left" nzRequired>Email</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="Enter Email" type="email" formControlName="email">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="fx-gr-1">
+      <nz-form-label nzLabelAlign="left">Contact No.</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="Enter Contact No." formControlName="contactNo">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="fx-gr-1">
+      <nz-form-label nzLabelAlign="left">Remarks</nz-form-label>
+      <nz-form-control>
+        <textarea nz-input placeholder="Enter Remarks" formControlName="remarks"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <button nz-button nzType="primary" (click)="onSubmit()">Submit</button>
+  <div *ngIf="submitted">
+    <h3>Submitted Form Information:</h3>
+    <p><strong>Employee Name:</strong> {{ basicInfoForm.get('employeeId')?.value }}</p>
+    <p><strong>Full Name:</strong> {{ basicInfoForm.get('fullName')?.value }}</p>
+    <p><strong>Email:</strong> {{ basicInfoForm.get('email')?.value }}</p>
+    <p><strong>Contact No.:</strong> {{ basicInfoForm.get('contactNo')?.value }}</p>
+    <p><strong>Remarks:</strong> {{ basicInfoForm.get('remarks')?.value }}</p>
+    <!-- Add more fields as needed -->
   </div>
 </div>

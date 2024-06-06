@@ -1,6 +1,7 @@
 import { Component, TemplateRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterOutlet } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CockpitComponent } from "./cockpit/cockpit.component";
 import { ServerElementComponent } from "./server-element/server-element.component";
 import { GameControlComponent } from "./game-control/game-control.component";
@@ -18,6 +19,10 @@ import { NzListModule } from "ng-zorro-antd/list";
 import { NzGridModule } from "ng-zorro-antd/grid";
 import { NzSelectModule } from "ng-zorro-antd/select";
 import { NzPlacementType } from "ng-zorro-antd/dropdown";
+import { FormsModule } from "@angular/forms";
+import { NzFormModule } from "ng-zorro-antd/form";
+import { NzSwitchModule } from "ng-zorro-antd/switch";
+import { ReactiveFormsModule, UntypedFormGroup } from "@angular/forms";
 import { createStore, select, withProps } from "@ngneat/elf";
 import {
   selectAllEntities,
@@ -34,16 +39,27 @@ import { joinRequestResult, trackRequestResult } from "@ngneat/elf-requests";
 import { fromFetch } from "rxjs/fetch";
 import { tap } from "rxjs";
 import { AccountServiceService } from "./account-service.service";
-
+import { SelectEntityEvent, UserMasterRes } from "./interface";
+export enum EntityType {
+  Corporate = 21,
+  Individual = 22,
+  Employee = 154,
+  Bank = 158,
+  CounterParty = 159
+}
 @Component({
   selector: "app-root",
   standalone: true,
   imports: [
     OddComponent,
     EvenComponent,
+    NzFormModule,
+    ReactiveFormsModule,
+    NzSwitchModule,
     NewAccountComponent,
     GameControlComponent,
     RouterOutlet,
+    FormsModule,
     CockpitComponent,
     ServerElementComponent,
     CommonModule,
@@ -63,41 +79,47 @@ import { AccountServiceService } from "./account-service.service";
   preserveWhitespaces: true
 })
 export class AppComponent {
+  basicInfoForm!: FormGroup;
+  submitted = false;
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.basicInfoForm = this.fb.group({
+      employeeId: ['',Validators.required],
+      fullName: ['', Validators.required],
+      password: ['', Validators.required],
+      confirm: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      contactNo: [''],
+      remarks: ['']
+    });
+  }
   title(title: any) {
     throw new Error("Method not implemented.");
   }
+
+  server: { type: string; name?: string; content?: string }[] = [];
+  // server: any[] = [];
+  newServerName?: string;
+  newServerContent?: string;
   extraTemplate: string | TemplateRef<void> | undefined;
   listOfPosition: NzPlacementType[] = ["bottomCenter"];
-  // accounts = [
-  //   {
-  //     name: "Master Account",
-  //     status: "active"
-  //   },
-  //   {
-  //     name: "Testaccount",
-  //     status: "inactive"
-  //   },
-  //   {
-  //     name: "Hidden Account",
-  //     status: "unknown"
-  //   }
-  // ];
-
-  // onAddAccount(newAccount: { name: string; status: string }) {
-  //   this.accounts.push({
-  //     name: newAccount.name,
-  //     status: newAccount.status
-  //   });
-  // }
-
-  // onStatusChanged(updateStatus: { id: number; newStatus: string }) {
-  //   this.accounts[updateStatus.id].status = updateStatus.newStatus;
-  // }
-  accounts: { name: string; status: string }[] = [];
-
-  constructor(private accountsService: AccountServiceService) {}
-
-  ngOnInit() {
-    this.accounts = this.accountsService.accounts;
+  addServer() {
+    this.server.push({
+      type: "server",
+      name: this.newServerName,
+      content: this.newServerContent
+    });
+  }
+  onSubmit(): void {
+    debugger
+    if (this.basicInfoForm.valid) {
+      console.log('Form submitted successfully!');
+      console.log('Form data:', this.basicInfoForm.value);
+      this.submitted = true;
+      // You can perform further actions here, such as sending the form data to a server
+    } else {
+      console.error('Form is invalid. Please check the fields.');
+    }
   }
 }
