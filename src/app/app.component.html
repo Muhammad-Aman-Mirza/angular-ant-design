@@ -1,47 +1,23 @@
-<!-- <div class="row">
-	<div class="col"></div>
-</div> -->
-<!-- <app-menu [tabsArray]="tabs" (onTabChange)="tabChange($event)"></app-menu> -->
-<!-- <div class="row">
-	<div class="col-12">
-		<div *ngIf="activatedTabIndex ==0">
-			<app-test1></app-test1>
-		</div>
-		<div *ngIf="activatedTabIndex ==1">
-			<app-test2></app-test2>
-		</div>
-		<div *ngIf="activatedTabIndex ==2">
-			<app-test3></app-test3>
-		</div>
-		<div *ngIf="activatedTabIndex ==3">
-			<app-test4></app-test4>
+<h1>Observable</h1>
+<div class="row">
+	<div class="container">
+		<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+			<a routerLink="/">Home</a> |
+			<a [routerLink]="['user', 1]">
+				User 1
+			</a>
+			|
+			<a [routerLink]="['user', 2]">
+				User 2
+			</a>
+
 		</div>
 	</div>
-</div> -->
-<!-- 
-<nz-radio-group [(ngModel)]="size">
-	<label nz-radio-button nzValue="small"><span>Small</span></label>
-	<label nz-radio-button nzValue="default"><span>Default</span></label>
-	<label nz-radio-button nzValue="large"><span>Large</span></label>
-</nz-radio-group> -->
-<!-- <nz-tabset [nzSize]="size">
-	<nz-tab *ngFor="let tab of tabs" [nzTitle]="'Tab ' + tab">Content of tab {{ tab }}</nz-tab>
-</nz-tabset> -->
-
-<app-menu [tabs]="tabs" [size]="'default'" (tabChange)="handleTabChange($event)"></app-menu>
-<div class="row">
-	<div class="col-12">
-		<div *ngIf="activatedTabIndex ==0">
-			<app-test1></app-test1>
-		</div>
-		<div *ngIf="activatedTabIndex ==1">
-			<app-test2></app-test2>
-		</div>
-		<div *ngIf="activatedTabIndex ==2">
-			<app-test3></app-test3>
-		</div>
-		<div *ngIf="activatedTabIndex ==3">
-			<app-test4></app-test4>
+	<hr>
+	<p *ngIf="userActivated">Activated!</p>
+	<div class="row">
+		<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+			<router-outlet></router-outlet>
 		</div>
 	</div>
 </div>

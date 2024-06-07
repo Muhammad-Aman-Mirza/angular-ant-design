@@ -1,6 +1,7 @@
-import { Component, TemplateRef } from "@angular/core";
+import { Component, OnDestroy, OnInit, TemplateRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterOutlet } from "@angular/router";
+import { RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { CockpitComponent } from "./cockpit/cockpit.component";
 import { ServerElementComponent } from "./server-element/server-element.component";
@@ -45,7 +46,7 @@ import {
 import { localStorageStrategy, persistState } from "@ngneat/elf-persist-state";
 import { joinRequestResult, trackRequestResult } from "@ngneat/elf-requests";
 import { fromFetch } from "rxjs/fetch";
-import { tap } from "rxjs";
+import { Subscription, tap } from "rxjs";
 import { AccountServiceService } from "./account-service.service";
 import { SelectEntityEvent, UserMasterRes } from "./interface";
 
@@ -55,6 +56,7 @@ import { NzFlexModule } from "ng-zorro-antd/flex";
 import { NzInputModule } from "ng-zorro-antd/input";
 import { NzTableModule } from "ng-zorro-antd/table";
 import { NzTypographyModule } from "ng-zorro-antd/typography";
+import { UsersService } from "./users.service";
 export enum EntityType {
   Corporate = 21,
   Individual = 22,
@@ -75,6 +77,7 @@ export enum EntityType {
     Test4Component,
     ReactiveFormsModule,
     NzCheckboxModule,
+    RouterLink,
     NzDatePickerModule,
     NzFlexModule,
     NzInputModule,
@@ -105,74 +108,20 @@ export enum EntityType {
   styleUrl: "./app.component.css",
   preserveWhitespaces: true
 })
-export class AppComponent {
-  constructor() {}
-
-  title(title: any) {
-    throw new Error("Method not implemented.");
+export class AppComponent implements OnInit, OnDestroy {
+  userActivated = false;
+  private activatedSub?: Subscription;
+  constructor(private userService: UsersService) {
+    this.activatedSub = this.userService.activatedEmitter.subscribe(
+      didActivate => {
+        this.userActivated = didActivate;
+      }
+    );
   }
 
-  server: { type: string; name?: string; content?: string }[] = [];
-  // server: any[] = [];
-  newServerName?: string;
-  newServerContent?: string;
-  extraTemplate: string | TemplateRef<void> | undefined;
-  listOfPosition: NzPlacementType[] = ["bottomCenter"];
-  addServer() {
-    this.server.push({
-      type: "server",
-      name: this.newServerName,
-      content: this.newServerContent
-    });
-  }
+  ngOnInit(): void {}
 
-  selectedTab: any;
-  selectedComponent: any;
-
-  // tabs = [
-  //   {
-  //     id: "test-1",
-  //     title: "Test 1",
-  //     loadComponent: async () =>
-  //       await import("./test1/test1.component").then(x => x.Test1Component)
-  //   },
-  //   {
-  //     id: "test-2",
-  //     title: "Test 2",
-  //     loadComponent: async () =>
-  //       await import("./test2/test2.component").then(x => x.Test2Component)
-  //   },
-  //   {
-  //     id: "test-3",
-  //     title: "Test 3",
-  //     loadComponent: async () =>
-  //       await import("./test3/test3.component").then(x => x.Test3Component)
-  //   },
-  //   {
-  //     id: "test-4",
-  //     title: "Test 4",
-  //     loadComponent: async () =>
-  //       await import("./test4/test4.component").then(x => x.Test4Component)
-  //   }
-  // ];
-
-  // selectTab(tab: any): void {
-  //   this.selectedTab = tab;
-  //   tab.loadComponent().then((component: any) => {
-  //     this.selectedComponent = component;
-  //   });
-  // }
-
-  tabs: string[] = ["Test 1", "Test 2", "Test 3", "Test 4"];
-  activatedTabIndex: number = 0;
-  tabChange(tabIndex: number) {
-    this.activatedTabIndex = tabIndex;
-  }
-
-  size: "large" | "default" | "small" = "small";
-  tab = [1, 2, 3];
-
-  handleTabChange(index: number): void {
-    console.log("Selected tab index:", index);
+  ngOnDestroy(): void {
+    this.activatedSub?.unsubscribe()
   }
 }

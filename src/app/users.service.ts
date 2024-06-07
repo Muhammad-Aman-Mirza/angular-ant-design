@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CounterService } from "./counter.service";
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -21,4 +22,5 @@ export class UsersService {
     this.activeUsers.splice(id, 1);
     this.counterService.incrementActiveToInactive();
   }
+  activatedEmitter = new Subject<boolean>();
 }
