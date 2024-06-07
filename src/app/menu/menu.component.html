@@ -1,0 +1,19 @@
+<!-- <ul class="nav nav-tabs">
+	<li class="nav-item" *ngFor="let tab of tabsArray; let sr = index" (click)="setTab(sr)">
+		<a class="nav-link" [ngClass]="activatedTab == sr ? 'active':''">{{tab}}</a>
+	</li>
+</ul> -->
+<!-- <nz-tabset nzCentered *ngFor="let tab of tabsArray; let sr = index" (click)="setTab(sr)">
+	<nz-tab [ngClass]="activatedTab == sr ? 'active':''"><a class="nav-link">{{tab}}</a></nz-tab>
+
+</nz-tabset> -->
+
+<!-- <nz-tabset [nzSize]="size" *ngFor="let tab of tabsArray; let sr = index" (click)="setTab(sr)">
+	<nz-tab [ngClass]="activatedTab == sr ? 'active':''">Content of tab {{ tab }}</nz-tab>
+</nz-tabset> -->
+
+<nz-tabset [nzSize]="size">
+	<nz-tab *ngFor="let tab of tabs; let i = index" [nzTitle]="'Tab ' + tab" (nzClick)="onTabChange(i)">
+		{{ tab }}
+	</nz-tab>
+</nz-tabset>

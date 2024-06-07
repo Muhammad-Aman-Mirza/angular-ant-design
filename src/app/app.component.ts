@@ -1,7 +1,7 @@
 import { Component, TemplateRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterOutlet } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { CockpitComponent } from "./cockpit/cockpit.component";
 import { ServerElementComponent } from "./server-element/server-element.component";
 import { GameControlComponent } from "./game-control/game-control.component";
@@ -19,11 +19,19 @@ import { NzListModule } from "ng-zorro-antd/list";
 import { NzGridModule } from "ng-zorro-antd/grid";
 import { NzSelectModule } from "ng-zorro-antd/select";
 import { NzPlacementType } from "ng-zorro-antd/dropdown";
+import { NzTabsModule } from "ng-zorro-antd/tabs";
 import { FormsModule } from "@angular/forms";
 import { NzFormModule } from "ng-zorro-antd/form";
 import { NzSwitchModule } from "ng-zorro-antd/switch";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule, UntypedFormGroup } from "@angular/forms";
 import { createStore, select, withProps } from "@ngneat/elf";
+import { Test1Component } from "./test1/test1.component";
+import { Test2Component } from "./test2/test2.component";
+import { Test3Component } from "./test3/test3.component";
+import { Test4Component } from "./test4/test4.component";
+import { MenuComponent } from "./menu/menu.component";
+import { TabStore } from "./tab.repository";
 import {
   selectAllEntities,
   setEntities,
@@ -40,6 +48,13 @@ import { fromFetch } from "rxjs/fetch";
 import { tap } from "rxjs";
 import { AccountServiceService } from "./account-service.service";
 import { SelectEntityEvent, UserMasterRes } from "./interface";
+
+import { NzCheckboxModule } from "ng-zorro-antd/checkbox";
+import { NzDatePickerModule } from "ng-zorro-antd/date-picker";
+import { NzFlexModule } from "ng-zorro-antd/flex";
+import { NzInputModule } from "ng-zorro-antd/input";
+import { NzTableModule } from "ng-zorro-antd/table";
+import { NzTypographyModule } from "ng-zorro-antd/typography";
 export enum EntityType {
   Corporate = 21,
   Individual = 22,
@@ -54,10 +69,22 @@ export enum EntityType {
     OddComponent,
     EvenComponent,
     NzFormModule,
+    Test1Component,
+    Test2Component,
+    Test3Component,
+    Test4Component,
     ReactiveFormsModule,
+    NzCheckboxModule,
+    NzDatePickerModule,
+    NzFlexModule,
+    NzInputModule,
+    NzTableModule,
+    NzTypographyModule,
     NzSwitchModule,
+    NzTabsModule,
     NewAccountComponent,
     GameControlComponent,
+    MenuComponent,
     RouterOutlet,
     FormsModule,
     CockpitComponent,
@@ -79,21 +106,8 @@ export enum EntityType {
   preserveWhitespaces: true
 })
 export class AppComponent {
-  basicInfoForm!: FormGroup;
-  submitted = false;
-  constructor(private fb: FormBuilder) { }
+  constructor() {}
 
-  ngOnInit(): void {
-    this.basicInfoForm = this.fb.group({
-      employeeId: ['',Validators.required],
-      fullName: ['', Validators.required],
-      password: ['', Validators.required],
-      confirm: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      contactNo: [''],
-      remarks: ['']
-    });
-  }
   title(title: any) {
     throw new Error("Method not implemented.");
   }
@@ -111,15 +125,54 @@ export class AppComponent {
       content: this.newServerContent
     });
   }
-  onSubmit(): void {
-    debugger
-    if (this.basicInfoForm.valid) {
-      console.log('Form submitted successfully!');
-      console.log('Form data:', this.basicInfoForm.value);
-      this.submitted = true;
-      // You can perform further actions here, such as sending the form data to a server
-    } else {
-      console.error('Form is invalid. Please check the fields.');
-    }
+
+  selectedTab: any;
+  selectedComponent: any;
+
+  // tabs = [
+  //   {
+  //     id: "test-1",
+  //     title: "Test 1",
+  //     loadComponent: async () =>
+  //       await import("./test1/test1.component").then(x => x.Test1Component)
+  //   },
+  //   {
+  //     id: "test-2",
+  //     title: "Test 2",
+  //     loadComponent: async () =>
+  //       await import("./test2/test2.component").then(x => x.Test2Component)
+  //   },
+  //   {
+  //     id: "test-3",
+  //     title: "Test 3",
+  //     loadComponent: async () =>
+  //       await import("./test3/test3.component").then(x => x.Test3Component)
+  //   },
+  //   {
+  //     id: "test-4",
+  //     title: "Test 4",
+  //     loadComponent: async () =>
+  //       await import("./test4/test4.component").then(x => x.Test4Component)
+  //   }
+  // ];
+
+  // selectTab(tab: any): void {
+  //   this.selectedTab = tab;
+  //   tab.loadComponent().then((component: any) => {
+  //     this.selectedComponent = component;
+  //   });
+  // }
+
+  tabs: string[] = ["Test 1", "Test 2", "Test 3", "Test 4"];
+  activatedTabIndex: number = 0;
+  tabChange(tabIndex: number) {
+    this.activatedTabIndex = tabIndex;
+  }
+
+  size: "large" | "default" | "small" = "small";
+  tab = [1, 2, 3];
+
+  handleTabChange(index: number): void {
+    console.log("Selected tab index:", index);
   }
 }
